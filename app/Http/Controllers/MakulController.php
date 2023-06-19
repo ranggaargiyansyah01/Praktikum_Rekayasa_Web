@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dosen;
+use App\Models\Makul;
 use Illuminate\Http\Request;
 
-class DosenController extends Controller
+class MakulController extends Controller
 {
     public function read()
 {
-    $model=new Dosen();
+    $model=new Makul();
 
     if(!$datax=$model ->all()) {
         $success=false;
@@ -18,9 +18,9 @@ class DosenController extends Controller
     
     foreach($datax as $dt) {
         $data[]=[
-            'nidn'=>$dt->nidn,
+            'id'=>$dt->id,
             'nama'=>$dt->nama,
-            'alamat'=>$dt->alamat,
+            'pengajar'=>$dt->pengajar,
             'jurusan'=>$dt->jurusan,
 
         ];
@@ -46,10 +46,10 @@ class DosenController extends Controller
 
     public function create(Request $req)
     {
-        $model=new Dosen();
-        $model->nidn=$req->nidn;
+        $model=new Makul();
+        $model->id=$req->id;
         $model->nama=$req->nama;
-        $model->alamat=$req->alamat;
+        $model->pengajar=$req->pengajar;
         $model->jurusan=$req->jurusan;
         if($model->save()) {
             $success=true;
@@ -65,33 +65,33 @@ class DosenController extends Controller
         return response() ->json($balikan);
     }
 
-    public function update(Request $request, $nidn)
+    public function update(Request $request, $id)
     {
-        $dosen = Dosen::find($nidn);
-        if (!$dosen) {
-            return response()->json(['message' => 'Dosen not found'], 404);
+        $makul = Makul::find($id);
+        if (!$makul) {
+            return response()->json(['message' => 'Makul not found'], 404);
         }
 
         $request->validate([
             'nama' => 'required',
-            'alamat' => 'required',
+            'pengajar' => 'required',
             'jurusan' => 'required',
         ]);
 
-        $dosen->update($request->all());
+        $makul->update($request->all());
 
-        return response()->json(['message' => 'Dosen updated successfully', 'dosen' => $dosen]);
+        return response()->json(['message' => 'Makul updated successfully', 'makul' => $makul]);
     }
 
-    public function destroy($nidn)
+    public function destroy($id)
     {
-        $dosen = Dosen::find($nidn);
-        if (!$dosen) {
-            return response()->json(['message' => 'Dosen not found'], 404);
+        $makul = Makul::find($id);
+        if (!$makul) {
+            return response()->json(['message' => 'Makul not found'], 404);
         }
 
-        $dosen->delete();
+        $makul->delete();
 
-        return response()->json(['message' => 'Dosen deleted successfully']);
+        return response()->json(['message' => 'Makul deleted successfully']);
     }
 }

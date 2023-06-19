@@ -12,4 +12,5 @@ class Mahasiswa extends Model
     protected $primaryKey = "nim"; // custom primary key
     public $incrementing=false; // mematikan auto increment
     protected $keyType="string"; // custom type primary key (defaultnya autoincreme
+    protected $fillable = ['nim', 'nama', 'umur', 'alamat', 'kota', 'kelas', 'jurusan'];
 }
